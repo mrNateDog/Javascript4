@@ -8,8 +8,9 @@
   </head>
   <body>
     <script>
-      //GET
-      fetch("https://gorest.co.in/public/v1/users", {
+      var post;
+      //Fetch #1 - calling all male genders
+      fetch("https://gorest.co.in/public/v1/users?gender=male", {
         method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -17,8 +18,40 @@
             "Bearer 469370dd193c4c9fc4dbd019aed09405ae44ed69d986bc634fdcfd54f77c6e66",
         },
       })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then(function (response) {
+          if (response.ok) {
+            return response.json();
+          } else {
+            return Promise.reject(response);
+          }
+        })
+        .then(function (data) {
+          console.log(data);
+          //Fetch #2 - calling all active users
+          return fetch("https://gorest.co.in/public/v1/users?status=active", {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer 469370dd193c4c9fc4dbd019aed09405ae44ed69d986bc634fdcfd54f77c6e66",
+            },
+          });
+        })
+        .then(function (response) {
+          if (response.ok) {
+            return response.json();
+          } else {
+            return Promise.reject(response);
+          }
+        })
+        //get the data
+        .then(function (data) {
+          console.log(data);
+        })
+        //throw an error if something goes wrong
+        .catch(function (error) {
+          console.warn(error);
+        });
     </script>
   </body>
 </html>
