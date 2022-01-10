@@ -10,7 +10,7 @@ let nathan = new Promise((resolve, reject) => {
     reject("ERROR, ERROR!");
   }
 });
-
+//calling the promise
 nathan
   .then((message) => {
     console.log("this is in the 'then' " + message);
